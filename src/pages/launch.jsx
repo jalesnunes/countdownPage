@@ -1,8 +1,26 @@
+import { useState } from 'react'
 import rocketImg from '../assets/images/rocket.svg'
 
 import '../styles/launch.scss'
 
 export function Launch() {
+  const [days, setDays] = useState(0)
+  const [hours, setHours] = useState(0)
+  const [minutes, setMinutes] = useState(0)
+  const [seconds, setSeconds] = useState(0)
+
+  let countdownDate = new Date('feb 18, 2022 00:00:00').getTime()
+
+  setInterval(function () {
+    let now = new Date().getTime()
+    let distance = countdownDate - now
+
+    setDays(Math.floor(distance / (1000 * 60 * 60 * 24)))
+    setHours(Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)))
+    setMinutes(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)))
+    setSeconds(Math.floor((distance % (1000 * 60)) / 1000))
+  })
+
   return (
     <div className="content">
       <div className="countdown">
@@ -17,10 +35,7 @@ export function Launch() {
           </div>
 
           <div className="numbers">
-            <span className="days">08 :</span>
-            <span className="hours">12 :</span>
-            <span className="minutes">44 :</span>
-            <span className="seconds">28</span>
+            <span>{days} : {hours} : {minutes} : {seconds}</span>
           </div>
         </div>
 
